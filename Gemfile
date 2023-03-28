@@ -6,7 +6,6 @@ gem "addressable"
 gem "httparty"
 gem "ffi"
 gem "unf_ext"
-
-group :test, :development do
-  gem "pry"
-end
+gem "pry"
+gem "coderay"
+gem "method_source"

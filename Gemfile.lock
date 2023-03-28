@@ -56,9 +56,11 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
+  coderay
   discordrb
   ffi
   httparty
+  method_source
   pry
   ruby-openai
   unf_ext
