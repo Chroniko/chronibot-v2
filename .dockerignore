@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+.gitignore
+.env
+test.rb
+.ruby-version
+fly.toml
