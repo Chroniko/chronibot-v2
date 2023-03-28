@@ -7,6 +7,8 @@ primary_region = "arn"
 processes = []
 
 [env]
+  BOT_PREFIX = "rubi"
+  RANDOM_CHAT_CHANCE = "0.01"
 
 [experimental]
   auto_rollback = false
@@ -31,8 +33,8 @@ processes = []
     handlers = ["tls", "http"]
     port = 443
 
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
+#  [[services.tcp_checks]]
+#    grace_period = "1s"
+#    interval = "15s"
+#    restart_limit = 0
+#    timeout = "2s"

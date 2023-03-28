@@ -39,4 +39,5 @@ COPY . .
 
 # Start the server
 EXPOSE 8080
-CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "--port", "8080"]
+# CMD ["bundle", "exec", "ruby", "bot/bot.rb"]
+RUN bundle exec ruby bot/bot.rb
