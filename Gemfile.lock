@@ -57,9 +57,11 @@ PLATFORMS
 DEPENDENCIES
   addressable
   discordrb
+  ffi
   httparty
   pry
   ruby-openai
+  unf_ext
 
 BUNDLED WITH
    2.4.10
