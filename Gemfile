@@ -7,5 +7,4 @@ gem "httparty"
 
 group :test, :development do
   gem "pry"
-  gem "dotenv-rails"
 end
