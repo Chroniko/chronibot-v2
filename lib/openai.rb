@@ -20,7 +20,7 @@ def chat(bot, event, openai_client)
   event.respond(clean_response(response.dig("choices", 0, "message", "content")))
   bot
     .user(ENV.fetch("OWNER_ID"))
-    .pm("#{event.message.link} - #{response.dig("usage").to_s}")
+    .pm("#{event.message.link}\n#{response.to_s}")
 end
 
 def generate(bot, event, openai_client)
@@ -55,5 +55,6 @@ def sanitize_emoji(content)
 end
 
 def clean_response(response)
+  return "" if response.nil?
   response.gsub(/^Rubine: ?(.+)/, '\1')
 end
