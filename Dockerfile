@@ -4,6 +4,10 @@ FROM ruby:$RUBY_VERSION-slim as base
 # Rack app lives here
 WORKDIR /app
 
+ENV BUNDLE_WITHOUT="development:test"
+ENV BUNDLE_DEPLOYMENT="1"
+ENV BUNDLE_PATH="/usr/local/bundle"
+
 # Update gems and bundler
 RUN gem update --system --no-document && \
     gem install -N bundler
@@ -16,8 +20,6 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential
 
-ENV BUNDLE_WITHOUT="development:test"
-ENV BUNDLE_FROZEN="true"
 # Install application gems
 COPY Gemfile* .
 RUN bundle install
@@ -39,5 +41,4 @@ COPY . .
 
 # Start the server
 EXPOSE 8080
-# CMD ["bundle", "exec", "ruby", "bot/bot.rb"]
-RUN bundle exec ruby bot/bot.rb
+ENTRYPOINT ["bundle", "exec", "ruby", "bot/bot.rb"]
