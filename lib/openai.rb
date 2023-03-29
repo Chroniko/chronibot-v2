@@ -13,11 +13,13 @@ def chat(bot, event, openai_client)
       model: "gpt-3.5-turbo",
       messages: [{
         role: "user",
-        content: "#{SYSTEM_ROLE_CONTENT}\n\n#{context(event).join("\n")}"
+        content: "#{SYSTEM_ROLE_CONTENT}\n\n" +
+          context(event).join("\n") +
+          "\nRubine: "
       }],
       temperature: 0.7,
     })
-  event.respond(clean_response(response.dig("choices", 0, "message", "content")))
+  event.respond(response.dig("choices", 0, "message", "content"))
   bot
     .user(ENV.fetch("OWNER_ID"))
     .pm("#{event.message.link}\n#{response.to_s}")
@@ -52,9 +54,4 @@ end
 
 def sanitize_emoji(content)
   content.gsub(/<(:.+:)[0-9]+>/, '\1')
-end
-
-def clean_response(response)
-  return "" if response.nil?
-  response.gsub(/^Rubine: ?(.+)/, '\1')
 end
