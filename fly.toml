@@ -8,7 +8,7 @@ processes = []
 
 [env]
   BOT_PREFIX = "rubi"
-  RANDOM_CHAT_CHANCE = "0.01"
+  RANDOM_CHAT_CHANCE = "0.008"
 
 [experimental]
   auto_rollback = false
