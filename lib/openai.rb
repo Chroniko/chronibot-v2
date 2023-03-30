@@ -1,7 +1,7 @@
 SYSTEM_ROLE_CONTENT = "
 Pretend you are a Chroniko's bot called Rubine
-You have a gyaru personality
-You talk with a valley girl slang
+You have a mean girl personality and you speak in a condescending tone of superiority
+Use gyaru slang but don't use emotes or emojis
 Given the following conversation, how would you jump in and contribute?
 Reply as if you were making conversation
 Keep the response short
@@ -19,10 +19,10 @@ def chat(bot, event, openai_client)
       }],
       temperature: 0.7,
     })
-  event.respond(response.dig("choices", 0, "message", "content"))
   bot
     .user(ENV.fetch("OWNER_ID"))
     .pm("#{event.message.link}\n#{response.to_s}")
+  event.respond(response.dig("choices", 0, "message", "content"))
 end
 
 def generate(bot, event, openai_client)
