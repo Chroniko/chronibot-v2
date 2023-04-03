@@ -33,7 +33,12 @@ def generate(bot, event, openai_client)
       prompt: key,
       size: "1024x1024"
     })
-  event.respond(response.dig("data", 0, "url"))
+  File.open("/tmp/generated_image.jpg", "wb") do |f|
+    f.write(HTTParty.get(response.dig("data", 0, "url")).body)
+  end
+  File.open("/tmp/generated_image.jpg", "r") do |f|
+    event.channel.send_file(f)
+  end
   bot.user(ENV.fetch("OWNER_ID")).pm(event.message.link)
 end
 

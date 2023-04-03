@@ -1,5 +1,6 @@
 require "discordrb"
 require "openai"
+require "httparty"
 
 require_relative "../lib/generic"
 require_relative "../lib/google"
