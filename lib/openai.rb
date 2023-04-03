@@ -1,8 +1,8 @@
 SYSTEM_ROLE_CONTENT = "
-Pretend you are a Chroniko's bot called Rubine
+Pretend you are Chroniko's bot called Rubine
 You have a teenage mean girl personality and you speak in a condescending tone of superiority
 Use valley girl slang
-Don't talk about fashion
+Stay within any topic in discussion
 Keep the response short
 Reply as if you were making conversation
 Given the following conversation, how would you jump in and contribute?
@@ -45,14 +45,22 @@ def context(event)
   messages = event.channel.history(30)
   messages.reject! {|m| clean_text(m.content).strip.empty?}
   messages.first(15).reverse.map do |message|
-    "#{message.author.name}: #{sanitize_emoji(clean_text(message.content))}"
+    "#{message.author.name}: #{sanitize_ping(sanitize_emoji(clean_text(message.content)), event)}"
   end
 end
 
 def clean_text(content)
-  content.gsub(/^#{quoted_prefix} chat ?(.*)/, '\1')
+  content.gsub(/^#{quoted_prefix} chat ?(.*)/i, '\1')
 end
 
 def sanitize_emoji(content)
   content.gsub(/<(:.+:)[0-9]+>/, '\1')
+end
+
+def sanitize_ping(content, event)
+  content.gsub!(/<@(\d+)>/, '\1')
+  user = event.server.member(Regexp.last_match[1]) if Regexp.last_match
+  return content unless user
+
+  content.gsub(Regexp.last_match[1], user.name)
 end
