@@ -43,7 +43,13 @@ def generate(bot, event, openai_client)
 end
 
 def random_chat(bot, event, openai_client)
+  return unless allowed_random_chat_location?(event)
   chat(bot, event, openai_client) if rand < ENV.fetch("RANDOM_CHAT_CHANCE", "0.01").to_f
+end
+
+def allowed_random_chat_location?(event)
+  ENV.fetch("ALLOWED_RANDOM_CHAT_SERVERS", "0").split(",").map(&:to_i).include?(event.server.id) ||
+    ENV.fetch("ALLOWED_RANDOM_CHAT_CHANNELS", "0").split(",").map(&:to_i).include?(event.channel.id)
 end
 
 def context(event)
