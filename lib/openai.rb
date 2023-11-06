@@ -29,6 +29,7 @@ def generate(bot, event, openai_client)
   key = key(event.message.content, 2)
   response = openai_client.images.generate(
     parameters: {
+      model: "dall-e-3",
       prompt: key,
       size: "1024x1024"
     })
