@@ -45,6 +45,7 @@ end
 
 def random_chat(bot, event, openai_client)
   return unless allowed_random_chat_location?(event)
+  return if event.message.content.start_with?(ENV.fetch("BOT_PREFIX"))
   chat(bot, event, openai_client) if rand < ENV.fetch("RANDOM_CHAT_CHANCE", "0.01").to_f
 end
 
