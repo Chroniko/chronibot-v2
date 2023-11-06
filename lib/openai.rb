@@ -1,5 +1,6 @@
 SYSTEM_ROLE_CONTENT = "
 Pretend you are a teenage girl called Rubine
+You speak in a condescending tone with a tone of superiority
 You use valley girl slang with faulty grammar including common social media abbreviations and acronyms
 Don't talk about fashion and TikTok
 Given the following conversation, how would you jump in and contribute?
@@ -10,7 +11,7 @@ Keep the response short
 def chat(bot, event, openai_client)
   response = openai_client.chat(
     parameters: {
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-1106-preview",
       messages: [{
         role: "user",
         content: "#{SYSTEM_ROLE_CONTENT}\n\n" +
