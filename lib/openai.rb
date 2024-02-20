@@ -8,6 +8,19 @@ Reply as if you were making conversation
 Keep the response short
 "
 
+def ask(bot, event, openai_client)
+  response = openai_client.chat(
+    parameters: {
+      model: "gpt-4-1106-preview",
+      messages: [{
+        role: "user",
+        content: event.message
+      }],
+      temperature: 0.7,
+    })
+  event.respond(response.dig("choices", 0, "message", "content"))
+end
+
 def chat(bot, event, openai_client)
   response = openai_client.chat(
     parameters: {

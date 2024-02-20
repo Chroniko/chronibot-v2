@@ -25,6 +25,10 @@ bot.message(content: /#{quoted_prefix} (youtube|yt) .+/i) do |event|
   youtube(event)
 end
 
+bot.message(content: /#{quoted_prefix} ask.*/i) do |event|
+  ask(bot, event, openai_client)
+end
+
 bot.message(content: /#{quoted_prefix} chat.*/i) do |event|
   chat(bot, event, openai_client)
 end
