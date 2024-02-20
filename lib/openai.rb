@@ -14,7 +14,7 @@ def ask(bot, event, openai_client)
       model: "gpt-4-1106-preview",
       messages: [{
         role: "user",
-        content: event.message
+        content: "#{event.message}\nAnswer succinctly"
       }],
       temperature: 0.7,
     })
