@@ -9,34 +9,43 @@ Keep the response short
 "
 
 def ask(bot, event, openai_client)
-  response = openai_client.chat(
+  key = key(event.message.content, 2)
+  response = openai_client.responses.create(
     parameters: {
-      model: "gpt-4-1106-preview",
-      messages: [{
-        role: "user",
-        content: "#{event.message}\nAnswer succinctly"
-      }],
-      temperature: 0.7,
+      model: "gpt-5-nano",
+      input: key,
+      reasoning: { "effort": "low" },
+      text: { "verbosity": "low" }
     })
-  event.respond(response.dig("choices", 0, "message", "content"))
+  event.respond(response.dig("output", 1, "content", 0, "text"))
+end
+
+def gigaask(bot, event, openai_client)
+  key = key(event.message.content, 2)
+  response = openai_client.responses.create(
+    parameters: {
+      model: "gpt-5-nano",
+      input: key,
+      reasoning: { "effort": "high" },
+      text: { "verbosity": "high" }
+    })
+  event.respond(response.dig("output", 1, "content", 0, "text"))
 end
 
 def chat(bot, event, openai_client)
-  response = openai_client.chat(
+  response = openai_client.responses.create(
     parameters: {
-      model: "gpt-4-1106-preview",
-      messages: [{
-        role: "user",
-        content: "#{SYSTEM_ROLE_CONTENT}\n\n" +
+      model: "gpt-5-nano",
+      input: "#{SYSTEM_ROLE_CONTENT}\n\n" +
           context(event).join("\n") +
-          "\nRubine: "
-      }],
-      temperature: 0.7,
+          "\nRubine: ",
+      reasoning: { "effort": "low" },
+      text: { "verbosity": "low" }
     })
   bot
     .user(ENV.fetch("OWNER_ID"))
     .pm("#{event.message.link}\n#{response.to_s}")
-  event.respond(response.dig("choices", 0, "message", "content"))
+  event.respond(response.dig("output", 1, "content", 0, "text"))
 end
 
 def generate(bot, event, openai_client)

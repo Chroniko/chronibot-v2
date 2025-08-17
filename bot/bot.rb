@@ -29,6 +29,10 @@ bot.message(content: /#{quoted_prefix} ask.*/i) do |event|
   ask(bot, event, openai_client)
 end
 
+bot.message(content: /#{quoted_prefix} gigaask.*/i) do |event|
+  gigaask(bot, event, openai_client)
+end
+
 bot.message(content: /#{quoted_prefix} chat.*/i) do |event|
   chat(bot, event, openai_client)
 end
