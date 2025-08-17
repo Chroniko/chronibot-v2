@@ -42,9 +42,6 @@ def chat(bot, event, openai_client)
       reasoning: { "effort": "low" },
       text: { "verbosity": "low" }
     })
-  bot
-    .user(ENV.fetch("OWNER_ID"))
-    .pm("#{event.message.link}\n#{response.to_s}")
   event.respond(response.dig("output", 1, "content", 0, "text"))
 end
 
@@ -62,7 +59,6 @@ def generate(bot, event, openai_client)
   File.open("/tmp/generated_image.jpg", "r") do |f|
     event.channel.send_file(f)
   end
-  bot.user(ENV.fetch("OWNER_ID")).pm(event.message.link)
 end
 
 def random_chat(bot, event, openai_client)
